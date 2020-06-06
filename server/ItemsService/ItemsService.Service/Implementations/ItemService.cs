@@ -21,11 +21,11 @@ namespace ItemsService.Service.Implementations
         /// </summary>
         /// <param name="itemName">Item name to query on</param>
         /// <returns>The max price that exists for the item</returns>
-        public double GetMaxPriceForItem(string itemName)
+        public decimal GetMaxPriceForItem(string itemName)
         {
             if (string.IsNullOrWhiteSpace(itemName)) throw new ArgumentNullException();
 
-            double maxPrice = (from item in _itemRepository.GetAll()
+            decimal maxPrice = (from item in _itemRepository.GetAll()
                                where item.ItemName.ToLower() == itemName.ToLower()
                                select item.Cost).Max();
 

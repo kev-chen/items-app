@@ -5,6 +5,6 @@ namespace ItemsService.Domain.Models
     {
         public int Id { get; set; }
         public string ItemName { get; set; }
-        public double Cost { get; set; }
+        public decimal Cost { get; set; }
     }
 }
