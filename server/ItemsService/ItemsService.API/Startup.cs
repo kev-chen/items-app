@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ItemsService.Data.Repositories;
+using ItemsService.Domain.Models;
+using ItemsService.Service.Implementations;
+using ItemsService.Service.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace ItemsService.API
 {
@@ -26,6 +23,9 @@ namespace ItemsService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped(typeof(IRepository<Item>), typeof(ItemRepository));
+            services.AddTransient<IItemService, ItemService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
