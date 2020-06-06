@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ItemsService.Data.Contexts
 {
-    public class ItemDbContext : DbContext
+    public class ItemContext : DbContext
     {
-        public ItemDbContext(DbContextOptions<ItemDbContext> options) : base(options)
+        public ItemContext(DbContextOptions<ItemContext> options) : base(options)
         {
         }
 
