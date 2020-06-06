@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ItemsService.Data.Entities;
 using ItemsService.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
