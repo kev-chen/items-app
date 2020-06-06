@@ -26,7 +26,7 @@ namespace ItemsService.Service.Implementations
             if (string.IsNullOrWhiteSpace(itemName)) throw new ArgumentNullException();
 
             double maxPrice = (from item in _itemRepository.GetAll()
-                               where item.Name.ToLower() == itemName.ToLower()
+                               where item.ItemName.ToLower() == itemName.ToLower()
                                select item.Cost).Max();
 
             return maxPrice;
@@ -39,8 +39,8 @@ namespace ItemsService.Service.Implementations
         public IEnumerable<Item> GetMaxPrices()
         {
             IEnumerable<Item> maxPrices = from item in _itemRepository.GetAll()
-                                          group item by item.Name into g
-                                          select new Item { Name = g.Key, Cost = g.Max(i => i.Cost) };
+                                          group item by item.ItemName into g
+                                          select new Item { ItemName = g.Key, Cost = g.Max(i => i.Cost) };
 
             return maxPrices;
         }

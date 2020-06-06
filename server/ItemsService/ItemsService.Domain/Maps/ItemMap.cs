@@ -9,7 +9,7 @@ namespace ItemsService.Domain.Maps
         public ItemMap(EntityTypeBuilder<Item> entityBuilder)
         {
             entityBuilder.HasKey(i => i.Id);
-            entityBuilder.Property(i => i.Name).IsRequired();
+            entityBuilder.Property(i => i.ItemName).IsRequired();
             entityBuilder.Property(i => i.Cost).IsRequired();
         }
     }
