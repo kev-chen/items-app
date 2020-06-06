@@ -1,12 +1,13 @@
 ﻿using System;
 using ItemsService.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ItemsService.Domain.Maps
+namespace ItemsService.Data.EntityBuilders
 {
-    public class ItemMap
+    public class ItemEntityBuilder
     {
-        public ItemMap(EntityTypeBuilder<Item> entityBuilder)
+        public ItemEntityBuilder(EntityTypeBuilder<Item> entityBuilder)
         {
             entityBuilder.HasKey(i => i.Id);
             entityBuilder.Property(i => i.ItemName).IsRequired();

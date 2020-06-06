@@ -6,9 +6,5 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Maps\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
   </ItemGroup>
 </Project>

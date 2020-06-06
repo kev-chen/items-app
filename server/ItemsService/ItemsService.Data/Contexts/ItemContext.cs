@@ -1,5 +1,5 @@
 ﻿using System;
-using ItemsService.Domain.Maps;
+using ItemsService.Data.EntityBuilders;
 using ItemsService.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +14,7 @@ namespace ItemsService.Data.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            new ItemMap(modelBuilder.Entity<Item>());
+            new ItemEntityBuilder(modelBuilder.Entity<Item>());
         }
     }
 }
