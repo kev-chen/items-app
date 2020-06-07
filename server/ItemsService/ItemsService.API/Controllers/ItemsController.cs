@@ -9,6 +9,7 @@ using ItemsService.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using ItemsService.Domain.BindingModels;
 using System.IO;
+using System.Linq.Expressions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,38 +27,93 @@ namespace ItemsService.API.Controllers
 
         // GET: api/items/max-prices
         [HttpGet("max-prices")]
-        public IActionResult GetMaxPriceForItems()
+        public IActionResult GetMaxPrices()
         {
-            return Ok(_itemService.GetMaxPrices());
+            try
+            {
+                return Ok(_itemService.GetMaxPrices());
+            }
+            catch (ItemNotFoundException ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         // GET api/items/max-prices/{itemName}
         [HttpGet("max-prices/{itemName}")]
         public IActionResult GetMaxPriceForItem(string itemName)
         {
-            return Ok(new { Price = _itemService.GetMaxPriceForItem(itemName) });
+            try
+            {
+                return Ok(new { Price = _itemService.GetMaxPriceForItem(itemName) });
+            }
+            catch (ItemNotFoundException ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         // GET: api/items
         [HttpGet]
         public IActionResult GetAllItems()
         {
-            return Ok(_itemService.GetAllItems());
+            try
+            {
+                return Ok(_itemService.GetAllItems());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         // GET: api/items/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(_itemService.GetById(id));
+            try
+            {
+                return Ok(_itemService.GetById(id));
+            }
+            catch (ItemNotFoundException ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         // DELETE: api/items/{id}
         [HttpDelete("{id}")]
         public IActionResult DeleteItem(int id)
         {
-            _itemService.DeleteItem(id);
-            return Ok();
+            try
+            {
+                _itemService.DeleteItem(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         // PUT: api/items/{id}
@@ -76,6 +132,16 @@ namespace ItemsService.API.Controllers
                 Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
                 return BadRequest(new { message = "An error has occured attempting to update" });
             }
+            catch (ItemNotFoundException ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         // POST: api/items
@@ -92,6 +158,11 @@ namespace ItemsService.API.Controllers
             {
                 Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
                 return BadRequest(new { message = "An error has occured attempting to create" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
+                return StatusCode(500);
             }
         }
     }

@@ -27,11 +27,13 @@ namespace ItemsService.Service.Implementations
         {
             if (string.IsNullOrWhiteSpace(itemName)) throw new ArgumentNullException();
 
-            decimal maxPrice = (from item in _itemRepository.GetAll()
-                               where item.ItemName.ToLower() == itemName.ToLower()
-                               select item.Cost).Max();
+            IEnumerable<decimal> itemPrices = from item in _itemRepository.GetAll()
+                                              where item.ItemName.ToLower() == itemName.ToLower()
+                                              select item.Cost;
 
-            return maxPrice;
+            if (itemPrices.Count() <= 0) throw new ItemNotFoundException();
+
+            return itemPrices.Max();
         }
 
         /// <summary>
@@ -49,7 +51,10 @@ namespace ItemsService.Service.Implementations
 
         public Item GetById(int id)
         {
-            return _itemRepository.GetById(id);
+            Item item = _itemRepository.GetById(id);
+            if (item == null) throw new ItemNotFoundException();
+
+            return item;
         }
 
         public IEnumerable<Item> GetAllItems()
@@ -70,14 +75,16 @@ namespace ItemsService.Service.Implementations
             _itemRepository.Delete(id);
         }
 
-        public Item UpdateItem(UpdateItemBindingModel item)
+        public Item UpdateItem(UpdateItemBindingModel updateModel)
         {
-            Item existingItem = _itemRepository.GetById(item.Id.Value);
+            Item existingItem = _itemRepository.GetById(updateModel.Id.Value);
+            if (existingItem == null) throw new ItemNotFoundException();
+
             Item updatedItem = new Item()
             {
-                Id = item.Id.Value,
-                ItemName = item.ItemName ?? existingItem.ItemName,
-                Cost = item.Cost ?? existingItem.Cost
+                Id = updateModel.Id.Value,
+                ItemName = updateModel.ItemName ?? existingItem.ItemName,
+                Cost = updateModel.Cost ?? existingItem.Cost
             };
 
             return _itemRepository.Update(updatedItem);

@@ -51,8 +51,6 @@ namespace ItemsService.Data.Repositories
         {
             Item item = _entities.Find(entity.Id);
 
-            if (item == null) throw new AppException("Item not found");
-
             // Update ItemName if changed
             if (!string.IsNullOrEmpty(entity.ItemName) && entity.ItemName!= item.ItemName)
                 item.ItemName = entity.ItemName;
