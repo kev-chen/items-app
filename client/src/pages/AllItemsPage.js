@@ -6,15 +6,25 @@ import ItemsService from '../services/ItemsService';
 import ContentContainer from '../components/ContentContainer/ContentContainer';
 import Hero from '../components/Hero/Hero';
 import ItemTable from '../components/ItemTable/ItemTable';
+import CreateForm from '../components/CreateForm/CreateForm';
 
-const TopPricesPage = (props) => {
-  const [itemData, setItemData] = useState([]);
+const AllItemsPage = () => {
+  const [itemData, setItemData] = useState();
 
   useEffect(() => {
-    ItemsService.getItemMaxPrices().then((data) => setItemData(data));
+    fetchAllItems();
   }, []);
 
-  const renderTable = () => {
+  const fetchAllItems = () => {
+    ItemsService.getAllItems().then((data) =>
+      setItemData(data ? data.sort((first, second) => (first.id > second.id ? 1 : -1)) : null),
+    );
+  };
+
+  /**
+   * Render item table or indicator if no data exists
+   */
+  const renderData = () => {
     if (itemData === null) {
       return <p className="text-center">No Items Found</p>;
     } else if (itemData === undefined) {
@@ -24,16 +34,19 @@ const TopPricesPage = (props) => {
         </div>
       );
     } else {
-      return <ItemTable items={itemData} />;
+      return <ItemTable showId editable items={itemData} update={fetchAllItems} />;
     }
   };
 
   return (
     <div>
-      <Hero title="Top Prices" />
-      <ContentContainer>{renderTable()}</ContentContainer>
+      <Hero title="Overview" />
+
+      <ContentContainer>
+        {renderData()}
+      </ContentContainer>
     </div>
   );
 };
 
-export default TopPricesPage;
+export default AllItemsPage;

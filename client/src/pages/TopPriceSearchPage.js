@@ -5,6 +5,9 @@ import { Button } from 'react-bootstrap';
 import ItemsService from '../services/ItemsService';
 import ContentContainer from '../components/ContentContainer/ContentContainer';
 import Hero from '../components/Hero/Hero';
+import SearchBox from '../components/SearchBox/SearchBox';
+import Item from '../components/Item/Item';
+import ItemTable from '../components/ItemTable/ItemTable';
 
 const TopPriceSearchPage = (props) => {
   const [price, setPrice] = useState();
@@ -16,14 +19,11 @@ const TopPriceSearchPage = (props) => {
 
   return (
     <div>
-      <Hero title="Search" subtitle="Search for the top price for an item" />
+      <Hero title="Search" subtitle="Search for the top price of an item" />
       <ContentContainer>
-        <input type="text" ref={searchBox} placeholder="Search..." />
-        <Button variant="primary" onClick={handleButtonClick}>
-          Go
-        </Button>
+        <SearchBox inputRef={searchBox} onSearch={handleButtonClick} />
         <br />
-        {price ? price : null}
+        {price && <ItemTable items={[{ itemName: searchBox.current.value, cost: price }]} />}
       </ContentContainer>
     </div>
   );
