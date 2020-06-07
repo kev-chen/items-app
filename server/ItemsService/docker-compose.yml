@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  itemsservice.api:
+    image: ${DOCKER_REGISTRY-}itemsservice
+    build:
+      context: .
+      dockerfile: ItemsService.API/Dockerfile
