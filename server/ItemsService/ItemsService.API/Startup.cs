@@ -26,6 +26,17 @@ namespace ItemsService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ItemContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             services.AddControllers();
             services.AddScoped(typeof(IRepository<Item>), typeof(ItemRepository));
             services.AddTransient<IItemService, ItemService>();
@@ -43,6 +54,8 @@ namespace ItemsService.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
