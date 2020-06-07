@@ -8,5 +8,8 @@ namespace ItemsService.Data.Repositories
     {
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
+        TEntity Update(TEntity entity);
+        void Delete(int id);
+        TEntity Create(TEntity entity);
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using ItemsService.Data.Repositories;
 using ItemsService.Domain.Models;
 using ItemsService.Service.Interfaces;
+using ItemsService.Domain.BindingModels;
+using ItemsService.Domain.Exceptions;
 
 namespace ItemsService.Service.Implementations
 {
@@ -36,13 +38,49 @@ namespace ItemsService.Service.Implementations
         /// Gets a list of max prices grouped by item name
         /// </summary>
         /// <returns>An IEnumerable of the Items that have the max price</returns>
-        public IEnumerable<Item> GetMaxPrices()
+        public IEnumerable<object> GetMaxPrices()
         {
-            IEnumerable<Item> maxPrices = from item in _itemRepository.GetAll()
+            IEnumerable<object> maxPrices = from item in _itemRepository.GetAll()
                                           group item by item.ItemName into g
-                                          select new Item { ItemName = g.Key, Cost = g.Max(i => i.Cost) };
+                                          select new { ItemName = g.Key, Cost = g.Max(i => i.Cost) };
 
             return maxPrices;
+        }
+
+        public Item GetById(int id)
+        {
+            return _itemRepository.GetById(id);
+        }
+
+        public IEnumerable<Item> GetAllItems()
+        {
+            return _itemRepository.GetAll();
+        }
+
+        public Item CreateItem(Item item)
+        {
+            if (string.IsNullOrWhiteSpace(item.ItemName)) throw new AppException("ItemName is required");
+
+            _itemRepository.Create(item);
+            return item;
+        }
+
+        public void DeleteItem(int id)
+        {
+            _itemRepository.Delete(id);
+        }
+
+        public Item UpdateItem(UpdateItemBindingModel item)
+        {
+            Item existingItem = _itemRepository.GetById(item.Id.Value);
+            Item updatedItem = new Item()
+            {
+                Id = item.Id.Value,
+                ItemName = item.ItemName ?? existingItem.ItemName,
+                Cost = item.Cost ?? existingItem.Cost
+            };
+
+            return _itemRepository.Update(updatedItem);
         }
     }
 }
