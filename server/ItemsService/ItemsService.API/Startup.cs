@@ -31,6 +31,9 @@ namespace ItemsService.API
 
                 string connStr;
 
+                Console.WriteLine($"env is {env}");
+                Console.WriteLine($"DEFAULT_CONNECTION is {Environment.GetEnvironmentVariable("DEFAULT_CONNECTION")}");
+
                 // Depending on if in development or production, use either Heroku-provided
                 // connection string, or development connection string from env var.
                 if (env == "Development")
@@ -42,6 +45,8 @@ namespace ItemsService.API
                 {
                     // Use connection string provided at runtime by Heroku.
                     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+                    Console.WriteLine($"connUrl is {connUrl}");
 
                     // Parse connection URL to connection string for Npgsql
                     connUrl = connUrl.Replace("postgres://", string.Empty);
@@ -56,6 +61,8 @@ namespace ItemsService.API
 
                     connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}";
                 }
+
+                Console.WriteLine($"connStr is {connStr}");
 
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from Heroku, use it to set up your DbContext.
