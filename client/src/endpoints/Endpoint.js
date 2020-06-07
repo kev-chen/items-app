@@ -1,5 +1,5 @@
 const Endpoint = {
-  items: 'https://localhost:5001/api/items',
+  items: 'https://mk-items-app.herokuapp.com/api/items',
 };
 
 export default Endpoint;
