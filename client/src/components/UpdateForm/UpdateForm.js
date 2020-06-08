@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { InputGroup, FormControl, Button, Form } from 'react-bootstrap';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 import ItemsService from '../../services/ItemsService';
 
 const UpdateForm = (props) => {
-  const [costErrorMsg, setCostErrorMsg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isSaveDisabled, setIsSaveDisabled] = useState(true);
   const itemNameRef = useRef();
   const costRef = useRef();
@@ -13,7 +13,7 @@ const UpdateForm = (props) => {
   useEffect(() => {
     if (itemNameRef) itemNameRef.current.value = props.item.itemName;
     if (costRef) costRef.current.value = props.item.cost;
-  }, [itemNameRef, costRef]);
+  }, [itemNameRef, costRef, props.item.cost, props.item.itemName]);
 
   /**
    * Checks the input fields against the item data to see if
@@ -34,18 +34,26 @@ const UpdateForm = (props) => {
     }
   };
 
+  /**
+   * Handles submitting the update to the server
+   */
   const onClickHandler = async () => {
     const parsedCost = parseFloat(costRef.current.value);
     if (isNaN(parsedCost)) {
-      setCostErrorMsg('Cost must be a number');
+      setErrorMessage('Cost must be a number');
     } else {
-      setCostErrorMsg('');
+      setErrorMessage('');
       const item = await ItemsService.updateItem(props.item.id, {
         itemName: itemNameRef.current.value,
         cost: parsedCost,
       });
-      if (props.update) props.update();
-      if (props.collapse) props.collapse();
+
+      if (!item) {
+        setErrorMessage('There was an error updating the item');
+      } else {
+        if (props.update) props.update();
+        if (props.collapse) props.collapse();
+      }
     }
   };
 
@@ -60,7 +68,7 @@ const UpdateForm = (props) => {
           </Button>
         </InputGroup.Append>
       </InputGroup>
-      <p className="error">{costErrorMsg}</p>
+      <p className="error">{errorMessage}</p>
     </div>
   );
 };

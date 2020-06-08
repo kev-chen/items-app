@@ -1,15 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-activity/lib/Bounce/Bounce.css';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import Routes from './routes/Routes';
 import NavBar from './components/NavBar/NavBar';
-import TopPricesPage from './pages/TopPricesPage';
-import TopPriceSearchPage from './pages/TopPriceSearchPage';
-import AllItemsPage from './pages/AllItemsPage';
 
 function App() {
   return (

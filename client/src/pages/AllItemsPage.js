@@ -6,7 +6,6 @@ import ItemsService from '../services/ItemsService';
 import ContentContainer from '../components/ContentContainer/ContentContainer';
 import Hero from '../components/Hero/Hero';
 import ItemTable from '../components/ItemTable/ItemTable';
-import CreateForm from '../components/CreateForm/CreateForm';
 
 const AllItemsPage = () => {
   const [itemData, setItemData] = useState();

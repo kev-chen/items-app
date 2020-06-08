@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Accordion, Card, useAccordionToggle, Table, Row, Col } from 'react-bootstrap';
+import { Button, Accordion, Card, useAccordionToggle, Row, Col } from 'react-bootstrap';
 
 import ItemsService from '../../services/ItemsService';
 import UpdateForm from '../UpdateForm/UpdateForm';

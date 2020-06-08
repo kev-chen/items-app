@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 
 const SearchBox = (props) => {
