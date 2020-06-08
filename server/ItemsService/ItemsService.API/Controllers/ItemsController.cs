@@ -35,6 +35,7 @@ namespace ItemsService.API.Controllers
             }
             catch (ItemNotFoundException ex)
             {
+                // Capture the log in heroku logs
                 Console.WriteLine($"Exception in {MethodBase.GetCurrentMethod().Name}: {ex.Message}");
                 return NotFound();
             }
