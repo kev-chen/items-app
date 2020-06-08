@@ -7,21 +7,21 @@ import ItemsService from '../../services/ItemsService';
 import './styles.css';
 
 const CreateForm = (props) => {
-  const [costErrorMsg, setCostErrorMsg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const itemNameRef = useRef();
   const costRef = useRef();
 
   const onClickHandler = async () => {
     const parsedCost = parseFloat(costRef.current.value);
     if (isNaN(parsedCost)) {
-      setCostErrorMsg('Cost must be a number');
+      setErrorMessage('Cost must be a number');
     } else {
-      setCostErrorMsg('');
+      setErrorMessage('');
       const item = await ItemsService.createItem({ itemName: itemNameRef.current.value, cost: parsedCost });
+      if (!item) setErrorMessage('There was an error adding this item');
       if (props.update) props.update();
       itemNameRef.current.value = ''
       costRef.current.value = ''
-      console.log(item);
     }
   };
 
@@ -36,7 +36,7 @@ const CreateForm = (props) => {
           </Button>
         </InputGroup.Append>
       </InputGroup>
-      <p className="error">{costErrorMsg}</p>
+      <p className="error">{errorMessage}</p>
     </div>
   );
 };
