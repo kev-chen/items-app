@@ -3,8 +3,10 @@ A full stack web app hosted in Heroku built with React 16.13.1, ASP.NET Core 3.1
 
 ## Prerequisites
 - React 16.13.1
+- npm
 - ASP.NET Core 3.1
 - dotnet cli
+- Visual Studio
 - PostgreSQL 12.2
 
 
@@ -30,7 +32,7 @@ Note: You can also add the add the connection string to `appsettings.json` for q
 
 5. To run the initial EF migration and create the Item table in your local database, from the `items-app/ItemsService` directory, run 
 ```bash
-dotnet ef database update --startup-project ItemsService.API/ItemsService.API.csproj -p ItemsService.Data/ItemsService.Data.csproj dotnet ef database update --startup-project ItemsService.API/ItemsService.API.csproj -p ItemsService.Data/ItemsService.Data.csproj
+dotnet ef database update --startup-project ItemsService.API/ItemsService.API.csproj -p ItemsService.Data/ItemsService.Data.csproj
 ``` 
 
 6. Click the play button to run the service
