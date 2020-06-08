@@ -3,6 +3,8 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import Routes from '../../routes/Routes';
+
 const NavBar = (props) => {
   return (
     <Navbar id="header" className="border-bottom" bg="transparent" expand="sm">
@@ -10,15 +12,11 @@ const NavBar = (props) => {
       <Navbar.Toggle className="border-0" aria-controls="navbar-toggle" />
       <Navbar.Collapse id="navbar-toggle">
         <Nav className="mr-auto">
-          <Link className="nav-link" to="/">
-            Overview
-          </Link>
-          <Link className="nav-link" to="/top-prices">
-            Top Prices
-          </Link>
-          <Link className="nav-link" to="/top-prices/search">
-            Top Price Search
-          </Link>
+          {Routes.map(({ path, name }) => (
+            <Link className="nav-link" to={path}>
+              {name}
+            </Link>
+          ))}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
